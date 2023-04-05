@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import wishListRoutes from "./routes/wishListRoutes.js";
 import cors from "cors";
 
 //config env
@@ -26,6 +27,7 @@ app.use(morgan("dev"));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
+app.use("/api/v1/wishlist", wishListRoutes);
 
 //rest api
 app.get("/", (req, res) => {

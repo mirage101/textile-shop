@@ -254,3 +254,40 @@ export const orderStatusController = async (req, res) => {
     });
   }
 };
+
+export const usersController = async (req, res) => {
+  try {
+    const users = await userModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "All Users List",
+      users,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error while getting all users",
+    });
+  }
+};
+
+//delete user
+export const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await userModel.findByIdAndDelete(id);
+    res.status(200).send({
+      success: true,
+      message: "User Deleted Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while deleting user",
+      error,
+    });
+  }
+};
