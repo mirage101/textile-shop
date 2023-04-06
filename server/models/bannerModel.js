@@ -3,20 +3,31 @@ import mongoose from "mongoose";
 const bannerSchema = new mongoose.Schema({
   name: {
     type: String,
-    // required: true,
+    required: true,
     // unique: true,
+  },
+  slug: {
+    type: String,
+    required: true,
   },
   content: {
     type: String,
   },
-  bgImage: {
+  background: {
     data: Buffer,
     contentType: String,
   },
   isActive:{
-    type: Boolean,
+    type: String,
   },
-  order: {}
+  order: {
+    type: Number,
+  },
+  position: {
+    type: String,
+    default: "Top",
+    enum: ["Top", "Bottom", "Left", "Right"],
+  }
 });
 
 export default mongoose.model("Banner", bannerSchema);

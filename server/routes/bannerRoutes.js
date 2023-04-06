@@ -1,10 +1,11 @@
 import express from "express";
-import {
-    
+import {    
     createBannerController,
     getBannerController,
+    updateBannerController,
     bannerBgController,
     deleteBannerController,
+    getSingleBannerController
 } from "../controllers/bannerController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import formidable from "express-formidable";
@@ -17,21 +18,27 @@ router.post(
   requireSignIn,
   isAdmin,
   formidable(),
-  createProductController
+  createBannerController
 );
 //routes
 router.put(
-  "/update-banner/:bid",
+  "/update-banner/:id",
   requireSignIn,
   isAdmin,
   formidable(),
-  updateProductController
+  updateBannerController
 );
 
 //get banners
-router.get("/get-banner", getBannerController);
+router.get("/", getBannerController);
+
+//get banner bg
+router.get("/background/:id", bannerBgController);
 
 //delete rproduct
-router.delete("/delete-banner/:bid", deleteBannerController);
+router.delete("/:id", deleteBannerController);
+
+//single banner
+router.get("/get-banner/:slug", getSingleBannerController);
 
 export default router;

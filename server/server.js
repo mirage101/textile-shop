@@ -7,6 +7,8 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import wishListRoutes from "./routes/wishListRoutes.js";
+import infopagesRoutes from "./routes/infopagesRoutes.js";
+import bannerRoutes from  "./routes/bannerRoutes.js";
 import cors from "cors";
 
 //config env
@@ -28,6 +30,8 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/wishlist", wishListRoutes);
+app.use("/api/v1/infopages", infopagesRoutes);
+app.use("/api/v1/banners", bannerRoutes);
 
 //rest api
 app.get("/", (req, res) => {

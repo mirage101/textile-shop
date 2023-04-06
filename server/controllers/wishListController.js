@@ -32,6 +32,26 @@ export const createWishListController = async (req, res) => {
   }
 };
 
+// Get single wishlist item
+export const singleWishlistController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const wishlist = await wishListModel.findOne({ id });
+    res.status(200).send({
+      success: true,
+      message: "Get Single wishlist Successfully",
+      wishlist,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error While getting Single Category",
+    });
+  }
+};
+
 // get all wishList
 export const wishListControlller = async (req, res) => {
   try {
