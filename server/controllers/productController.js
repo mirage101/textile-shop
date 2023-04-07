@@ -19,8 +19,10 @@ var gateway = new braintree.BraintreeGateway({
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
+    console.log(req.fields);
+    const { name, description, price, category, quantity, shipping, isOnSale, salePrice, saleStartDate, saleEndDate } =
       req.fields;
+    
     const { photo } = req.files;
     //alidation
     switch (true) {
@@ -107,6 +109,26 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
+//get all products on sale
+export const getProductOnSaleController = async (req, res) => {
+  try {
+    const productsOnSale = await productModel.find({ isOnSale: true});
+    
+    res.status(200).send({
+      success: true,
+      message: "AllProducts on sale",
+      productsOnSale,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr in getting products",
+      error: error.message,
+    });
+  }
+};
+
 // get photo
 export const productPhotoController = async (req, res) => {
   try {
@@ -146,7 +168,7 @@ export const deleteProductController = async (req, res) => {
 //upate producta
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, price, category, quantity, shipping, isOnSale, salesPrice, saleStartDate, saleEndDate } =
       req.fields;
     const { photo } = req.files;
     //alidation
@@ -375,3 +397,4 @@ export const brainTreePaymentController = async (req, res) => {
     console.log(error);
   }
 };
+

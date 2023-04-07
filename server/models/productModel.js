@@ -18,6 +18,28 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isOnSale: {
+      type: Boolean,
+      default: "false",
+    },
+    salePrice: {
+      type: Number,
+      required: function () {
+        return this.isOnSale;
+      },
+    },
+    saleStartDate: {
+      type: Date,
+      required: function () {
+        return this.isOnSale;
+      },
+    },
+    saleEndDate: {
+      type: Date,
+      required: function () {
+        return this.isOnSale;
+      },
+    },
     category: {
       type: mongoose.ObjectId,
       ref: "Category",
