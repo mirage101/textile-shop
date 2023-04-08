@@ -8,7 +8,9 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import wishListRoutes from "./routes/wishListRoutes.js";
 import infopagesRoutes from "./routes/infopagesRoutes.js";
-import bannerRoutes from  "./routes/bannerRoutes.js";
+import bannerRoutes from "./routes/bannerRoutes.js";
+import slideRoutes from "./routes/slideRoutes.js";
+import shippingRoutes from "./routes/shippingRoutes.js";
 import cors from "cors";
 
 //config env
@@ -32,7 +34,8 @@ app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/wishlist", wishListRoutes);
 app.use("/api/v1/infopages", infopagesRoutes);
 app.use("/api/v1/banners", bannerRoutes);
-
+app.use("/api/v1/slider", slideRoutes);
+app.use("/api/v1/shipping", shippingRoutes);
 //rest api
 app.get("/", (req, res) => {
   res.send({
