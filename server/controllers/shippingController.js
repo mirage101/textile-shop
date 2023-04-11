@@ -8,14 +8,8 @@ export const createShippingMethod = async (req, res) => {
     switch (true) {
       case !method:
         return res.status(500).send({ error: "method is Required" });
-      case !status:
-        return res.status(500).send({ error: "status is Required" });
-      case !rate:
-        return res.status(500).send({ error: "rate is Required" });
-      case !details:
-        return res.status(500).send({ error: "details is Required" });
     }
-
+    console.log("status ", status);
     const newShippingMethod = new ShippingMethod({
       method,
       status,
@@ -42,11 +36,19 @@ export const createShippingMethod = async (req, res) => {
 // Get all shipping methods
 export const getShippingMethods = async (req, res) => {
   try {
-    const shippingMethods = await ShippingMethod.find();
-    res.status(200).json(shippingMethods);
+    const shippingMethods = await ShippingMethod.find({});
+    res.status(200).send({
+      success: true,
+      message: "shippingMethods ",
+      shippingMethods,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr in getting shippingMethods",
+      error: error.message,
+    });
   }
 };
 
@@ -87,12 +89,12 @@ export const updateShippingMethodById = async (req, res) => {
 // Delete a shipping method by id
 export const deleteShippingMethodById = async (req, res) => {
   try {
-    const shippingMethod = await ShippingMethod.findById(req.params.id);
-    if (!shippingMethod) {
-      return res.status(404).json({ message: "Shipping method not found" });
-    }
-    await shippingMethod.remove();
-    res.status(200).json({ message: "Shipping method deleted successfully" });
+    await ShippingMethod.findByIdAndDelete(req.params.id);
+    console.log(req.params.id);
+    res.status(200).send({
+      success: true,
+      message: "shippingMethod Deleted successfully",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

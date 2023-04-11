@@ -6,6 +6,7 @@ import fs from "fs";
 import slugify from "slugify";
 import braintree from "braintree";
 import dotenv from "dotenv";
+import { nextTick } from "process";
 
 dotenv.config();
 
@@ -20,9 +21,19 @@ var gateway = new braintree.BraintreeGateway({
 export const createProductController = async (req, res) => {
   try {
     console.log(req.fields);
-    const { name, description, price, category, quantity, shipping, isOnSale, salePrice, saleStartDate, saleEndDate } =
-      req.fields;
-    
+    const {
+      name,
+      description,
+      price,
+      category,
+      quantity,
+      shipping,
+      isOnSale,
+      salePrice,
+      saleStartDate,
+      saleEndDate,
+    } = req.fields;
+
     const { photo } = req.files;
     //alidation
     switch (true) {
@@ -109,11 +120,25 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
+export const getProductById = async (req, res) => {
+  try {
+    const product = await productModel.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    const { name, price, description, photo } = product; // destructure name, price, and description from the product object
+    res.json({ name, price, description, photo }); // return the variables as a JSON response
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 //get all products on sale
 export const getProductOnSaleController = async (req, res) => {
   try {
-    const productsOnSale = await productModel.find({ isOnSale: true});
-    
+    const productsOnSale = await productModel.find({ isOnSale: true });
+
     res.status(200).send({
       success: true,
       message: "AllProducts on sale",
@@ -168,8 +193,18 @@ export const deleteProductController = async (req, res) => {
 //upate producta
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping, isOnSale, salesPrice, saleStartDate, saleEndDate } =
-      req.fields;
+    const {
+      name,
+      description,
+      price,
+      category,
+      quantity,
+      shipping,
+      isOnSale,
+      salesPrice,
+      saleStartDate,
+      saleEndDate,
+    } = req.fields;
     const { photo } = req.files;
     //alidation
     switch (true) {
@@ -367,11 +402,19 @@ export const braintreeTokenController = async (req, res) => {
 //payment
 export const brainTreePaymentController = async (req, res) => {
   try {
-    const { nonce, cart } = req.body;
+    const { nonce, cart, selectedRate, selectedMethod } = req.body;
+    console.log(
+      "selectedRate " + selectedRate,
+      "shippingMethods " + selectedMethod
+    );
     let total = 0;
     cart.map((i) => {
       total += i.price;
     });
+
+    //total price with shipping rate
+    total += total + selectedRate;
+    console.log("total " + total);
     let newTransaction = gateway.transaction.sale(
       {
         amount: total,
@@ -385,6 +428,10 @@ export const brainTreePaymentController = async (req, res) => {
           const order = new orderModel({
             products: cart,
             payment: result,
+            shippment: {
+              selectedRate,
+              selectedMethod,
+            },
             buyer: req.user._id,
           }).save();
           res.json({ ok: true });
@@ -397,4 +444,3 @@ export const brainTreePaymentController = async (req, res) => {
     console.log(error);
   }
 };
-

@@ -10,7 +10,11 @@ import {
   orderStatusController,
   usersController,
   deleteUserController,
+  addToWishlist,
+  removeFromWishlist,
+  getUserWishlist,
 } from "../controllers/authController.js";
+
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 //router object
 const router = express.Router();
@@ -58,5 +62,12 @@ router.put(
 router
   .get("/users", requireSignIn, isAdmin, usersController)
   .delete("/delete-user/:id", requireSignIn, isAdmin, deleteUserController);
+
+// router.post("/wishlist/:productId", addToWishlist);
+router.delete("/wishlist/:productId", removeFromWishlist);
+
+router.post("/wishlist/:productId", addToWishlist);
+// router.get("/users/:id/wishlist", getUserWishlist);
+router.get("/users/:userId/wishlist", requireSignIn, getUserWishlist);
 
 export default router;

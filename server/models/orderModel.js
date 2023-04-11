@@ -8,6 +8,14 @@ const orderSchema = new mongoose.Schema(
         ref: "Products",
       },
     ],
+    shippment: {
+      selectedMethod: {
+        type: String,
+      },
+      selectedRate: {
+        type: Number,
+      },
+    },
     payment: {},
     buyer: {
       type: mongoose.ObjectId,
