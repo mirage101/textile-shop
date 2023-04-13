@@ -1,9 +1,10 @@
 import express from "express";
 import {
-    createInfoPageController,
-    getInfoPagesController,
-    deleteInfoPageController,
-    updateInfoPageController
+  createInfoPageController,
+  getInfoPagesController,
+  deleteInfoPageController,
+  updateInfoPageController,
+  getInfoPageController,
 } from "../controllers/infopageController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 
@@ -28,14 +29,13 @@ router.put(
 router.get("/get-infopages", getInfoPagesController);
 
 //single product
-// router.get("/get-infopage/:slug", getSingleProductController);
+router.get("/get-infopage/:slug", getInfoPageController);
 
 //delete rproduct
 router.delete("/delete-infopage/:id", deleteInfoPageController);
 
 // //product per page
 // router.get("/product-list/:page", productListController);
-
 
 // //category wise product
 // router.get("/product-category/:slug", productCategoryController);

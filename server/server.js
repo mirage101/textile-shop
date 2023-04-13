@@ -10,6 +10,8 @@ import infopagesRoutes from "./routes/infopagesRoutes.js";
 import bannerRoutes from "./routes/bannerRoutes.js";
 import slideRoutes from "./routes/slideRoutes.js";
 import shippingRoutes from "./routes/shippingRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import tickerRoutes from "./routes/tickerRoutes.js";
 import cors from "cors";
 
 //config env
@@ -34,6 +36,8 @@ app.use("/api/v1/infopages", infopagesRoutes);
 app.use("/api/v1/banners", bannerRoutes);
 app.use("/api/v1/slider", slideRoutes);
 app.use("/api/v1/shipping", shippingRoutes);
+app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/modules", tickerRoutes);
 //rest api
 app.get("/", (req, res) => {
   res.send({
