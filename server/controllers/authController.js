@@ -314,20 +314,27 @@ export const addToWishlist = async (req, res) => {
 
 // Controller to remove a product ID from the user's wishlist
 export const removeFromWishlist = async (req, res) => {
+  console.log("Request Params: ", req.params);
   try {
-    const { productId } = req.params;
-    const { userId } = req.body;
+    const { productId, userId } = req.params;
+
+    // console.log(userId, productId);
     const user = await userModel.findById(userId);
+
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
     const index = user.wishlist.indexOf(productId);
-    if (index === -1) {
+
+    if (!user.wishlist.includes(productId)) {
       return res.status(400).json({ error: "Product not found in wishlist" });
     }
     user.wishlist.splice(index, 1);
+    console.log(user);
     await user.save();
+
     res.status(200).json({ message: "Product removed from wishlist", user });
+    console.log(user);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

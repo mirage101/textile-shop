@@ -64,7 +64,11 @@ router
   .delete("/delete-user/:id", requireSignIn, isAdmin, deleteUserController);
 
 // router.post("/wishlist/:productId", addToWishlist);
-router.delete("/wishlist/:productId", removeFromWishlist);
+router.delete(
+  "/users/:userId/wishlist/:productId",
+  requireSignIn,
+  removeFromWishlist
+);
 
 router.post("/wishlist/:productId", addToWishlist);
 // router.get("/users/:id/wishlist", getUserWishlist);

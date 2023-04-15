@@ -8,21 +8,23 @@ dotenv.config();
 // import validator from "validator";
 
 export const createBannerController = async (req, res) => {
-      try {
-        const { name, content, isActive, order, position } = req.fields;
-        const { background } = req.files;
-        // const isActive = validator.toBoolean(req.fields.isActive);
+  try {
+    const { name, content, isActive, order, position } = req.fields;
+    const { background } = req.files;
+    // const isActive = validator.toBoolean(req.fields.isActive);
 
-        switch (true) {
-          case !name:
-            return res.status(500).send({ error: "Name is Required" });
-          case background && background.size > 1000000:
-            return res
-              .status(500)
-              .send({ error: "background is Required and should be less then 1mb" });
-        }
+    switch (true) {
+      case !name:
+        return res.status(500).send({ error: "Name is Required" });
+      case background && background.size > 1000000:
+        return res
+          .status(500)
+          .send({
+            error: "background is Required and should be less then 1mb",
+          });
+    }
 
-        const banner = new bannerModel({ ...req.fields, slug: slugify(name) });
+    const banner = new bannerModel({ ...req.fields, slug: slugify(name) });
     if (background) {
       banner.background.data = fs.readFileSync(background.path);
       banner.background.contentType = background.type;
@@ -33,23 +35,23 @@ export const createBannerController = async (req, res) => {
       message: "Banner Created Successfully",
       banner,
     });
-      } catch (error) {
-        console.log(error);
-        res.status(500).send({
-          success: false,
-          error,
-          message: "Error in creating banner",
-        });
-      }
-  };
-  
-  // get single banner
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error in creating banner",
+    });
+  }
+};
+
+// get single banner
 export const getSingleBannerController = async (req, res) => {
   try {
     const banner = await bannerModel
       .findOne({ slug: req.params.slug })
-      .select("-background")
-      // .populate("category");
+      .select("-background");
+    // .populate("category");
     res.status(200).send({
       success: true,
       message: "Broduct Fetched",
@@ -64,30 +66,29 @@ export const getSingleBannerController = async (req, res) => {
     });
   }
 };
-  //get all banners
-  export const getBannerController = async (req, res) => {
-    try {
-      const banners = await bannerModel
-        .find({})
-        res.status(200).send({
-        success: true,
-        message: "All banners ",
-        banners,
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        success: false,
-        message: "Erorr in getting banners",
-        error: error.message,
-      });
-    }
-  };
+//get all banners
+export const getBannerController = async (req, res) => {
+  try {
+    const banners = await bannerModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "All banners",
+      banners,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in getting banners",
+      error: error.message,
+    });
+  }
+};
 
-  //upate producta
+//upate producta
 export const updateBannerController = async (req, res) => {
   try {
-    const {  name, content, isActive, order, position } = req.body;
+    const { name, content, isActive, order, position } = req.body;
     const { bgImage } = req.body;
     const { id } = req.params;
     const banner = await bannerModel.findByIdAndUpdate(
@@ -126,30 +127,32 @@ export const updateBannerController = async (req, res) => {
 //       });
 //     }
 //   };
-  
-  //delete controller
-  export const deleteBannerController = async (req, res) => {
-    try {
-      const { id } = req.params;
-      await bannerModel.findByIdAndDelete(id);
-      res.status(200).send({
-        success: true,
-        message: "Banner Deleted Successfully",
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        success: false,
-        message: "error while deleting Banner",
-        error,
-      });
-    }
-  };
 
-  // get background
+//delete controller
+export const deleteBannerController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await bannerModel.findByIdAndDelete(id);
+    res.status(200).send({
+      success: true,
+      message: "Banner Deleted Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while deleting Banner",
+      error,
+    });
+  }
+};
+
+// get background
 export const bannerBgController = async (req, res) => {
   try {
-    const banner = await bannerModel.findById(req.params.id).select("background");
+    const banner = await bannerModel
+      .findById(req.params.id)
+      .select("background");
     if (banner.background.data) {
       res.set("Content-type", banner.background.contentType);
       return res.status(200).send(banner.background.data);
