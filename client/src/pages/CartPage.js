@@ -191,8 +191,8 @@ const CartPage = () => {
                       <p>Price : ${p.price * p.quantity}</p>
                     )}
                   </div>
-                  <div className="col-md-4">x {p.quantity}</div>
-                  <div className="col-md-4 cart-remove-btn">
+                  <div className="col-md-2">x {p.quantity}</div>
+                  <div className="col-md-2 cart-remove-btn">
                     <button
                       className="btn btn-danger"
                       onClick={() => removeCartItem(p._id)}

@@ -312,6 +312,12 @@
 .products-sale .card-name-price.btns {
   flex-direction: row !important;
 }
+.ant-select-selector {
+  width: 200px !important;
+}
+.qtyBox-pr-details {
+  margin: 20px 0;
+}
 /* .banner h2,
 .banner p {
   position: absolute;

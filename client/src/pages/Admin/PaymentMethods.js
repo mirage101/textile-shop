@@ -125,24 +125,22 @@ const PaymentMethods = () => {
                 </thead>
                 <tbody>
                   {paymentMethods?.map((m) => (
-                    <>
-                      <tr key={m._id}>
-                        <td>{m.method}</td>
-                        <td>{m.status}</td>
-                        <td>
-                          <button className="btn btn-primary ms-2">Edit</button>
-                          <button
-                            className="btn btn-danger ms-2"
-                            onClick={() => {
-                              handleDelete(m._id);
-                              console.log(m._id);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    </>
+                    <tr key={m._id}>
+                      <td>{m.method}</td>
+                      <td>{m.status}</td>
+                      <td>
+                        {/* <button className="btn btn-primary ms-2">Edit</button> */}
+                        <button
+                          className="btn btn-danger ms-2"
+                          onClick={() => {
+                            handleDelete(m._id);
+                            console.log(m._id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>

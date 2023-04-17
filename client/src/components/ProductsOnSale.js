@@ -9,6 +9,7 @@ const ProductsOnSale = ({ nolimit }) => {
   const [productsOnSale, setProductsOnSale] = useState([]);
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
+  const [quantities, setQuantities] = useState({});
   const fetchProductsOnSale = async () => {
     try {
       const { data } = await axios.get("/api/v1/product/get-product/onsale");
@@ -44,26 +45,47 @@ const ProductsOnSale = ({ nolimit }) => {
                     <p className="card-text onsale-price">${p.salePrice}</p>
                     <p className="card-text old-price">${p.price}</p>
                   </div>
-                  <div className="card-name-price btns">
-                    <button
-                      className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="btn btn-dark ms-1"
-                      onClick={() => {
-                        setCart([...cart, p]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, p])
-                        );
-                        toast.success("Item Added to cart");
-                      }}
-                    >
-                      ADD TO CART
-                    </button>
+                  <div className="card-name-price">
+                    <input
+                      className="qtyBox"
+                      type="number"
+                      min="1"
+                      value={quantities[p._id] || 1}
+                      onChange={(e) =>
+                        setQuantities({
+                          ...quantities,
+                          [p._id]: parseInt(e.target.value),
+                        })
+                      }
+                    />
+                    <div className="pr-buttons">
+                      <button
+                        className="btn btn-info ms-1"
+                        onClick={() => navigate(`/product/${p.slug}`)}
+                      >
+                        More Details
+                      </button>
+
+                      <button
+                        className="btn btn-dark ms-1"
+                        onClick={() => {
+                          setCart([
+                            ...cart,
+                            { ...p, quantity: quantities[p._id] || 1 },
+                          ]);
+                          localStorage.setItem(
+                            "cart",
+                            JSON.stringify([
+                              ...cart,
+                              { ...p, quantity: quantities[p._id] || 1 },
+                            ])
+                          );
+                          toast.success("Item Added to cart");
+                        }}
+                      >
+                        ADD TO CART
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -87,6 +109,49 @@ const ProductsOnSale = ({ nolimit }) => {
                     <p className="card-text card-price">
                       ${p.salePrice} <span>${p.price}</span>
                     </p>
+                    <div className="card-name-price">
+                      <input
+                        className="qtyBox"
+                        type="number"
+                        min="1"
+                        value={quantities[p._id] || 1}
+                        onChange={(e) =>
+                          setQuantities({
+                            ...quantities,
+                            [p._id]: parseInt(e.target.value),
+                          })
+                        }
+                      />
+
+                      <div className="pr-buttons">
+                        <button
+                          className="btn btn-info ms-1"
+                          onClick={() => navigate(`/product/${p.slug}`)}
+                        >
+                          More Details
+                        </button>
+
+                        <button
+                          className="btn btn-dark ms-1"
+                          onClick={() => {
+                            setCart([
+                              ...cart,
+                              { ...p, quantity: quantities[p._id] || 1 },
+                            ]);
+                            localStorage.setItem(
+                              "cart",
+                              JSON.stringify([
+                                ...cart,
+                                { ...p, quantity: quantities[p._id] || 1 },
+                              ])
+                            );
+                            toast.success("Item Added to cart");
+                          }}
+                        >
+                          ADD TO CART
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>

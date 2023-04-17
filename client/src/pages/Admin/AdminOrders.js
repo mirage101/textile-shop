@@ -13,12 +13,13 @@ const AdminOrders = () => {
     "Not Process",
     "Processing",
     "Shipped",
-    "deliverd",
+    "delivered",
     "cancel",
   ]);
   const [changeStatus, setCHangeStatus] = useState("");
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
+  let total = 0;
   const getOrders = async () => {
     try {
       const { data } = await axios.get("/api/v1/auth/all-orders");
@@ -48,7 +49,7 @@ const AdminOrders = () => {
         <div className="col-md-3">
           <AdminMenu />
         </div>
-        <div className="col-md-9">
+        <div className="col-md-7">
           <h1 className="text-center">All Orders</h1>
           {orders?.map((o, i) => {
             return (
@@ -57,7 +58,6 @@ const AdminOrders = () => {
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Status</th>
                       <th scope="col">Buyer</th>
                       <th scope="col"> date</th>
                       <th scope="col">Payment</th>
@@ -67,19 +67,6 @@ const AdminOrders = () => {
                   <tbody>
                     <tr>
                       <td>{i + 1}</td>
-                      <td>
-                        <Select
-                          bordered={false}
-                          onChange={(value) => handleChange(o._id, value)}
-                          defaultValue={o?.status}
-                        >
-                          {status.map((s, i) => (
-                            <Option key={i} value={s}>
-                              {s}
-                            </Option>
-                          ))}
-                        </Select>
-                      </td>
                       <td>{o?.buyer?.name}</td>
                       <td>{moment(o?.createAt).fromNow()}</td>
                       <td>{o?.payment.success ? "Success" : "Failed"}</td>
@@ -88,24 +75,39 @@ const AdminOrders = () => {
                   </tbody>
                 </table>
                 <div className="container">
-                  {o?.products?.map((p, i) => (
-                    <div className="row mb-2 p-3 card flex-row" key={i}>
-                      <div className="col-md-4">
-                        <img
-                          src={`/api/v1/product/product-photo/${p._id}`}
-                          className="card-img-top"
-                          alt={p.name}
-                          width="100px"
-                          height={"100px"}
-                        />
+                  {o?.products?.map((p, i) => {
+                    const productTotal = p.price * o?.quantity;
+                    total += productTotal;
+                    return (
+                      <div className="row mb-2 p-3 card flex-row" key={p._id}>
+                        <div className="col-md-4">
+                          <img
+                            src={`/api/v1/product/product-photo/${p._id}`}
+                            className="card-img-top"
+                            alt={p.name}
+                            width="100px"
+                            height={"100px"}
+                          />
+                        </div>
+                        <div className="col-md-8">
+                          <p>{p.name}</p>
+                          <p>{p.description.substring(0, 30)}</p>
+                          <p>Price : ${p.price}</p>
+                          <p>
+                            Delivery price : ${o?.shippment?.selectedRate} (
+                            {o?.shippment?.selectedMethod})
+                          </p>
+                          <p>
+                            Total : ${productTotal + o?.shippment?.selectedRate}
+                          </p>
+                        </div>
                       </div>
-                      <div className="col-md-8">
-                        <p>{p.name}</p>
-                        <p>{p.description.substring(0, 30)}</p>
-                        <p>Price : {p.price}</p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
+                  <p className="total-row">
+                    Total Order Amount:{" "}
+                    <strong>${total + o?.shippment?.selectedRate}</strong>
+                  </p>
                 </div>
               </div>
             );

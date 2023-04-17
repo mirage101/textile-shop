@@ -81,7 +81,7 @@ const UpdateProduct = () => {
       productData.append("salePrice", salePrice);
       productData.append("saleStartDate", saleStartDate);
       productData.append("saleEndDate", saleEndDate);
-      const { data } = axios.put(
+      const { data } = await axios.put(
         `/api/v1/product/update-product/${id}`,
         productData
       );
@@ -226,18 +226,18 @@ const UpdateProduct = () => {
                 </Select>
               </div>
               <div className="mb-3 text-left">
-              <h5>Is on sale:</h5>
-              <input
-                type="checkbox"
-                value={!!isOnSale}
-                onChange={(value) => {
+                <h5>Is on sale:</h5>
+                <input
+                  type="checkbox"
+                  value={!!isOnSale}
+                  onChange={(value) => {
                     setIsOnSale(value);
-                }}
-                checked={!!isOnSale}
-              />
+                  }}
+                  checked={!!isOnSale}
+                />
               </div>
               <div className="mb-3">
-              <h5>Sales price:</h5>
+                <h5>Sales price:</h5>
                 <input
                   type="number"
                   value={salePrice}
@@ -247,7 +247,7 @@ const UpdateProduct = () => {
                 />
               </div>
               <div className="mb-3">
-              <h5>Sale start date:</h5>
+                <h5>Sale start date:</h5>
                 <input
                   type="date"
                   value={saleStartDate}
@@ -257,7 +257,7 @@ const UpdateProduct = () => {
                 />
               </div>
               <div className="mb-3">
-              <h5>Sale end date:</h5>
+                <h5>Sale end date:</h5>
                 <input
                   type="date"
                   value={saleEndDate}

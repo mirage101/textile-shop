@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./../components/Layout/Layout";
 import { useSearch } from "../context/search";
 import { useCart } from "../context/cart";
@@ -8,6 +8,7 @@ const Search = () => {
   const [values, setValues] = useSearch();
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
+  const [quantities, setQuantities] = useState({});
   return (
     <Layout title={"Search results"}>
       <div className="container">
@@ -16,7 +17,7 @@ const Search = () => {
           <h6>
             {values?.results.length < 1
               ? "No Products Found"
-              : `Found ${values?.results.length}`}
+              : `Found ${values?.results.length} products`}
           </h6>
           <div className="d-flex flex-wrap mt-4">
             {values?.results.map((p) => (
@@ -35,26 +36,48 @@ const Search = () => {
                     <p className="card-text onsale-price">${p.salePrice}</p>
                     <p className="card-text old-price">${p.price}</p>
                   </div>
-                  <div className="card-name-price btns">
-                    <button
-                      className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="btn btn-dark ms-1"
-                      onClick={() => {
-                        setCart([...cart, p]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, p])
-                        );
-                        toast.success("Item Added to cart");
-                      }}
-                    >
-                      ADD TO CART
-                    </button>
+                  <div className="card-name-price">
+                    <input
+                      className="qtyBox"
+                      type="number"
+                      min="1"
+                      value={quantities[p._id] || 1}
+                      onChange={(e) =>
+                        setQuantities({
+                          ...quantities,
+                          [p._id]: parseInt(e.target.value),
+                        })
+                      }
+                    />
+
+                    <div className="pr-buttons">
+                      <button
+                        className="btn btn-info ms-1"
+                        onClick={() => navigate(`/product/${p.slug}`)}
+                      >
+                        More Details
+                      </button>
+
+                      <button
+                        className="btn btn-dark ms-1"
+                        onClick={() => {
+                          setCart([
+                            ...cart,
+                            { ...p, quantity: quantities[p._id] || 1 },
+                          ]);
+                          localStorage.setItem(
+                            "cart",
+                            JSON.stringify([
+                              ...cart,
+                              { ...p, quantity: quantities[p._id] || 1 },
+                            ])
+                          );
+                          toast.success("Item Added to cart");
+                        }}
+                      >
+                        ADD TO CART
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

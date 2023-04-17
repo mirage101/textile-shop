@@ -16,6 +16,7 @@ const CategoryProduct = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
+  const [quantities, setQuantities] = useState({});
 
   const [wishlistedProducts, setWishlistedProducts] = useState(() => {
     return auth?.user?.wishlist || [];
@@ -117,9 +118,6 @@ const CategoryProduct = () => {
                           <FaHeartBroken />
                         </div>
                       )}
-                      {/* <div onClick={() => handleAddToWishlist(p._id)} className="wishlist-icon">
-                        {isProductInWishlist(p._id) ? <FaHeart /> : <FaHeartBroken />}
-                      </div> */}
 
                       <img
                         src={`/api/v1/product/product-photo/${p._id}`}
@@ -139,51 +137,56 @@ const CategoryProduct = () => {
                             currency: "USD",
                           })}
                         </p>
+                        <input
+                          className="qtyBox"
+                          type="number"
+                          min="1"
+                          value={quantities[p._id] || 1}
+                          onChange={(e) =>
+                            setQuantities({
+                              ...quantities,
+                              [p._id]: parseInt(e.target.value),
+                            })
+                          }
+                        />
                         <div className="card-name-price">
-                          <button
-                            className="btn btn-info ms-1"
-                            onClick={() => navigate(`/product/${p.slug}`)}
-                          >
-                            More Details
-                          </button>
-                          <button
-                            className="btn btn-dark ms-1"
-                            onClick={() => {
-                              setCart([...cart, p]);
-                              localStorage.setItem(
-                                "cart",
-                                JSON.stringify([...cart, p])
-                              );
-                              toast.success("Item Added to cart");
-                            }}
-                          >
-                            ADD TO CART
-                          </button>
+                          <div className="pr-buttons">
+                            <button
+                              className="btn btn-info ms-1"
+                              onClick={() => navigate(`/product/${p.slug}`)}
+                            >
+                              More Details
+                            </button>
+
+                            <button
+                              className="btn btn-dark ms-1"
+                              onClick={() => {
+                                setCart([
+                                  ...cart,
+                                  { ...p, quantity: quantities[p._id] || 1 },
+                                ]);
+                                localStorage.setItem(
+                                  "cart",
+                                  JSON.stringify([
+                                    ...cart,
+                                    { ...p, quantity: quantities[p._id] || 1 },
+                                  ])
+                                );
+                                toast.success("Item Added to cart");
+                              }}
+                            >
+                              ADD TO CART
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
-                {/* <div className="m-2 p-3">
-            {products && products.length < total && (
-              <button
-                className="btn btn-warning"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page + 1);
-                }}
-              >
-                {loading ? "Loading ..." : "Loadmore"}
-              </button>
-            )}
-          </div> */}
               </div>
             </div>
           </>
         )}
-        {/* {products && (
-          
-        )} */}
       </div>
     </Layout>
   );

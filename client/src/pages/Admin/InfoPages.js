@@ -6,7 +6,9 @@ import axios from "axios";
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
+import InfopageForm from "../../components/Form/InfopageForm";
 import "react-quill/dist/quill.snow.css";
+import { Modal } from "antd";
 const { Option } = Select;
 
 const InfoPages = () => {
@@ -15,6 +17,10 @@ const InfoPages = () => {
   const [content, setContent] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [infopages, setInfopages] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [updatedName, setUpdatedName] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
 
   useEffect(() => {}, []);
 
@@ -34,6 +40,27 @@ const InfoPages = () => {
     } catch (error) {
       console.log(error);
       toast.error("something went wrong");
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.put(
+        `/api/v1/infopages/update-infopage/${selected._id}`,
+        { name: updatedName, content: updatedContent }
+      );
+      if (data?.success) {
+        toast.success(`${updatedName} is updated`);
+        setSelected(null);
+        setUpdatedName("");
+        setUpdatedContent("");
+        setVisible(false);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -151,10 +178,10 @@ const InfoPages = () => {
                                 <button
                                   className="btn btn-primary ms-2"
                                   onClick={() => {
-                                    // setVisible(true);
-                                    // setUpdatedName(c.name);
-                                    // setUpdatedDescription(c.description);
-                                    // setSelected(c);
+                                    setVisible(true);
+                                    setUpdatedName(i.name);
+                                    setUpdatedContent(i.content);
+                                    setSelected(i);
                                   }}
                                 >
                                   Edit
@@ -177,6 +204,19 @@ const InfoPages = () => {
                 </div>
               </div>
             </div>
+            <Modal
+              onCancel={() => setVisible(false)}
+              footer={null}
+              open={visible}
+            >
+              <InfopageForm
+                value={updatedName}
+                setValue={setUpdatedName}
+                handleSubmit={handleUpdate}
+                content={content}
+                setContent={setUpdatedContent}
+              />
+            </Modal>
           </div>
         </div>
       </div>

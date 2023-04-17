@@ -12,6 +12,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [cart, setCart] = useCart();
+  const [quantities, setQuantities] = useState({});
 
   //initalp details
   useEffect(() => {
@@ -49,8 +50,8 @@ const ProductDetails = () => {
             src={`/api/v1/product/product-photo/${product._id}`}
             className="card-img-top"
             alt={product.name}
-            height="300"
-            width={"350px"}
+            height="392"
+            width="350px"
           />
         </div>
         <div className="col-md-6 product-details-info">
@@ -77,6 +78,18 @@ const ProductDetails = () => {
             )}
           </h6>
           <h6>Category : {product?.category?.name}</h6>
+          <input
+            className="qtyBox qtyBox-pr-details"
+            type="number"
+            min="1"
+            value={quantities[product?._id] || 1}
+            onChange={(e) =>
+              setQuantities({
+                ...quantities,
+                [product?._id]: parseInt(e.target.value),
+              })
+            }
+          />
           <button
             className="btn btn-secondary ms-1"
             onClick={() => {
@@ -122,26 +135,48 @@ const ProductDetails = () => {
                 <p className="card-text ">
                   {p.description.substring(0, 60)}...
                 </p>
+                <input
+                  className="qtyBox"
+                  type="number"
+                  min="1"
+                  value={quantities[p._id] || 1}
+                  onChange={(e) =>
+                    setQuantities({
+                      ...quantities,
+                      [p._id]: parseInt(e.target.value),
+                    })
+                  }
+                />
+
                 <div className="card-name-price">
-                  <button
-                    className="btn btn-info ms-1"
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                  >
-                    More Details
-                  </button>
-                  <button
-                    className="btn btn-dark ms-1"
-                    onClick={() => {
-                      setCart([...cart, p]);
-                      localStorage.setItem(
-                        "cart",
-                        JSON.stringify([...cart, p])
-                      );
-                      toast.success("Item Added to cart");
-                    }}
-                  >
-                    ADD TO CART
-                  </button>
+                  <div className="pr-buttons">
+                    <button
+                      className="btn btn-info ms-1"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      More Details
+                    </button>
+
+                    <button
+                      className="btn btn-dark ms-1"
+                      onClick={() => {
+                        setCart([
+                          ...cart,
+                          { ...p, quantity: quantities[p._id] || 1 },
+                        ]);
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([
+                            ...cart,
+                            { ...p, quantity: quantities[p._id] || 1 },
+                          ])
+                        );
+                        toast.success("Item Added to cart");
+                      }}
+                    >
+                      ADD TO CART
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

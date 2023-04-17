@@ -88,6 +88,7 @@ const ShippingMethods = () => {
             <form onSubmit={handleSubmit}>
               <label>
                 Method:
+                <br />
                 <input
                   type="text"
                   name="method"
@@ -99,6 +100,7 @@ const ShippingMethods = () => {
               <br />
               <label>
                 Rate:
+                <br />
                 <input
                   type="number"
                   name="rate"
@@ -110,6 +112,7 @@ const ShippingMethods = () => {
               <br />
               <label>
                 Details:
+                <br />
                 <textarea
                   name="details"
                   value={formData.details}
@@ -157,7 +160,7 @@ const ShippingMethods = () => {
                         <td>{m.rate}</td>
                         <td>{m.status}</td>
                         <td>
-                          <button className="btn btn-primary ms-2">Edit</button>
+                          {/* <button className="btn btn-primary ms-2">Edit</button> */}
                           <button
                             className="btn btn-danger ms-2"
                             onClick={() => {
