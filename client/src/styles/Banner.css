@@ -1,0 +1,12 @@
+.banner-container {
+  background-color: #ccc;
+  padding: 20px;
+  text-align: center;
+  padding-right: 0;
+  min-height: 100px;
+}
+
+.banner-container h1 {
+  color: #fff;
+  font-size: 40px;
+}

@@ -1,0 +1,10 @@
+.navbar-expand-lg .navbar-nav {
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: inherit;
+}

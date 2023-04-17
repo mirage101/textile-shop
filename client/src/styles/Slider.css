@@ -1,0 +1,33 @@
+.slider {
+  top: 40px;
+  height: calc(20vh - 80px);
+  overflow: hidden;
+  position: relative;
+}
+.slider .slides {
+  height: 100%;
+}
+.slider .slides .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transition: all 0.7s ease-in-out;
+  transform: translateX(-100%);
+}
+.slider .slides .slide.active {
+  display: block;
+  z-index: 1;
+  transform: translateX(0);
+}
+
+.slider .slides .slide img {
+  position: relative;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}

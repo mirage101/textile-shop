@@ -1,0 +1,8 @@
+main {
+  background: url("../../public/images/fabric-types_gray.png") no-repeat center
+    right 100%;
+  background-size: cover;
+  padding: 58px 0em 0em 0em;
+  min-height: 82vh;
+  overflow: hidden;
+}
