@@ -7,6 +7,7 @@ import slugify from "slugify";
 import braintree from "braintree";
 import dotenv from "dotenv";
 import { nextTick } from "process";
+import { Types } from "mongoose";
 
 dotenv.config();
 
@@ -73,6 +74,30 @@ export const createProductController = async (req, res) => {
     });
   }
 };
+//
+export const getNewProductController = async (req, res) => {
+  try {
+    const products = await productModel
+      .find({})
+      .populate("category")
+      .select("-photo")
+      .limit(4)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      counTotal: products.length,
+      message: "New products ",
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr in getting products",
+      error: error.message,
+    });
+  }
+};
 
 //get all products
 export const getProductController = async (req, res) => {
@@ -81,7 +106,6 @@ export const getProductController = async (req, res) => {
       .find({})
       .populate("category")
       .select("-photo")
-      .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
@@ -191,6 +215,7 @@ export const deleteProductController = async (req, res) => {
 };
 
 //upate producta
+const { ObjectId } = Types;
 export const updateProductController = async (req, res) => {
   try {
     const {
@@ -201,12 +226,14 @@ export const updateProductController = async (req, res) => {
       quantity,
       shipping,
       isOnSale,
-      salesPrice,
+      salePrice,
       saleStartDate,
       saleEndDate,
     } = req.fields;
+
     const { photo } = req.files;
-    //alidation
+
+    // Validation
     switch (true) {
       case !name:
         return res.status(500).send({ error: "Name is Required" });
@@ -224,27 +251,34 @@ export const updateProductController = async (req, res) => {
           .send({ error: "photo is Required and should be less then 1mb" });
     }
 
-    const products = await productModel.findByIdAndUpdate(
-      req.params.pid,
+    const product = await Product.findByIdAndUpdate(
+      ObjectId(req.params.pid),
       { ...req.fields, slug: slugify(name) },
       { new: true }
     );
-    if (photo) {
-      products.photo.data = fs.readFileSync(photo.path);
-      products.photo.contentType = photo.type;
+
+    if (!product) {
+      return res.status(404).send({ error: "Product not found" });
     }
-    await products.save();
+
+    if (photo) {
+      product.photo.data = fs.readFileSync(photo.path);
+      product.photo.contentType = photo.type;
+    }
+
+    await product.save();
+
     res.status(201).send({
       success: true,
       message: "Product Updated Successfully",
-      products,
+      product,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       error,
-      message: "Error in Updte product",
+      message: "Error in Update product",
     });
   }
 };
