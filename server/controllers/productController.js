@@ -403,9 +403,11 @@ export const braintreeTokenController = async (req, res) => {
 export const brainTreePaymentController = async (req, res) => {
   try {
     const { nonce, cart, selectedRate, selectedMethod } = req.body;
+    let quantity = parseInt(req.body.quantity);
     console.log(
       "selectedRate " + selectedRate,
-      "shippingMethods " + selectedMethod
+      "shippingMethods " + selectedMethod,
+      "quantity " + quantity
     );
     let total = 0;
     cart.map((i) => {
@@ -415,6 +417,10 @@ export const brainTreePaymentController = async (req, res) => {
     //total price with shipping rate
     total += total + selectedRate;
     console.log("total " + total);
+    // Check if the quantity is a number
+    if (typeof quantity !== "number") {
+      throw new Error("Quantity must be a number");
+    }
     let newTransaction = gateway.transaction.sale(
       {
         amount: total,
@@ -427,6 +433,7 @@ export const brainTreePaymentController = async (req, res) => {
         if (result) {
           const order = new orderModel({
             products: cart,
+            quantity: quantity,
             payment: result,
             shippment: {
               selectedRate,

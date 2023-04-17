@@ -10,6 +10,17 @@ export const getTicker = async (req, res) => {
   }
 };
 
+export const createTicker = async (req, res) => {
+  const { content, isActive } = req.body;
+
+  try {
+    const ticker = await Ticker.create({ content, isActive });
+    res.status(201).json(ticker);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Update ticker data
 export const updateTicker = async (req, res) => {
   try {

@@ -8,6 +8,10 @@ const orderSchema = new mongoose.Schema(
         ref: "Products",
       },
     ],
+    quantity: {
+      type: Number,
+      default: 1,
+    },
     shippment: {
       selectedMethod: {
         type: String,
