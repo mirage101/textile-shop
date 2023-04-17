@@ -32,11 +32,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-// app.use(express.static(path.join(__dirname, "./client/build")));
-app.get("*", function (req, res) {
-  const index = path.join(__dirname, "build", "./client/index.html");
-  res.sendFile(index);
-});
+app.use(express.static(path.join(__dirname, "./client/build")));
+// app.get('*', function (req, res) {
+//   const index = path.join(__dirname, 'build', 'index.html');
+//   res.sendFile(index);
+// });
 //routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
