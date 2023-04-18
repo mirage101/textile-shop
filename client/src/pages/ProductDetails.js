@@ -14,7 +14,6 @@ const ProductDetails = () => {
   const [cart, setCart] = useCart();
   const [quantities, setQuantities] = useState({});
 
-  //initalp details
   useEffect(() => {
     if (params?.slug) getProduct();
   }, [params?.slug]);

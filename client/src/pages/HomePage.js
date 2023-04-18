@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
-// import { useAuth } from "../context/auth";
 
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
@@ -12,7 +11,6 @@ import { AiOutlineReload } from "react-icons/ai";
 import "../styles/Homepage.css";
 import ProductsOnSale from "../components/ProductsOnSale";
 const HomePage = () => {
-  // const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);
@@ -38,7 +36,6 @@ const HomePage = () => {
 
   useEffect(() => {
     getAllCategory();
-    getTotal();
   }, []);
   //get products
   const getAllProducts = async () => {
@@ -49,16 +46,6 @@ const HomePage = () => {
       setProducts(data.products);
     } catch (error) {
       setLoading(false);
-      console.log(error);
-    }
-  };
-
-  //getTOtal COunt
-  const getTotal = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/product/product-count");
-      setTotal(data?.total);
-    } catch (error) {
       console.log(error);
     }
   };
