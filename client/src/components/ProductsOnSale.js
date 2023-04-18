@@ -21,7 +21,6 @@ const ProductsOnSale = ({ nolimit }) => {
     }
   };
 
-  //lifecycle method
   useEffect(() => {
     fetchProductsOnSale();
   }, []);
@@ -58,6 +57,7 @@ const ProductsOnSale = ({ nolimit }) => {
                         })
                       }
                     />
+                    metres
                     <div className="pr-buttons">
                       <button
                         className="btn btn-info ms-1"

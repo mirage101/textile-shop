@@ -61,29 +61,6 @@ const CreateProduct = () => {
     getAllBanners();
   };
 
-  //update category
-  // const handleUpdate = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const { data } = await axios.put(
-  //       `/api/v1/banners/update-banner/${selected._id}`,
-  //       { name: updatedName, description: updatedDescription }
-  //     );
-  //     if (data?.success) {
-  //       toast.success(`${updatedName} is updated`);
-  //       setSelected(null);
-  //       setUpdatedName("");
-  //       setUpdatedDescription("");
-  //       setVisible(false);
-  //       getAllCategory();
-  //     } else {
-  //       toast.error(data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleDelete = async (bId) => {
     try {
       const { data } = await axios.delete(`/api/v1/banners/${bId}`);

@@ -145,6 +145,7 @@ const CategoryProduct = () => {
                             })
                           }
                         />
+                        metres
                         <div className="card-name-price">
                           <div className="pr-buttons">
                             <button

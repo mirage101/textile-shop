@@ -19,13 +19,10 @@ const ShippingMethods = () => {
     event.preventDefault();
 
     try {
-      // Make a POST request to the server API endpoint
       await axios.post("/api/v1/shipping", formData);
 
-      // Handle success
       console.log("Shipping method created successfully");
 
-      // Reset the form data
       setFormData({
         method: "",
         active: "",
@@ -33,12 +30,10 @@ const ShippingMethods = () => {
         details: "",
       });
     } catch (error) {
-      // Handle error
       console.error("Failed to create shipping method", error);
     }
   };
 
-  // Handle form input changes
   const handleChange = (event) => {
     setFormData({
       ...formData,

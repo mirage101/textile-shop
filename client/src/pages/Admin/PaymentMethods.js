@@ -17,10 +17,8 @@ const PaymentMethods = () => {
     event.preventDefault();
 
     try {
-      // Make a POST request to the server API endpoint
       await axios.post("/api/v1/payment", formData);
 
-      // Handle success
       console.log("Payment method created successfully");
 
       // Reset the form data
@@ -29,12 +27,10 @@ const PaymentMethods = () => {
         active: "",
       });
     } catch (error) {
-      // Handle error
       console.error("Failed to create payment method", error);
     }
   };
 
-  // Handle form input changes
   const handleChange = (event) => {
     setFormData({
       ...formData,

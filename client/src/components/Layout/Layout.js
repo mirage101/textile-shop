@@ -26,7 +26,6 @@ const Layout = ({ children, title, description, keywords, author }) => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    // Make an API call to fetch the banner data
     fetch("/api/v1/banners/")
       .then((res) => res.json())
       .then((data) => setBanners(data.banners));

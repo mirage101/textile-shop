@@ -20,10 +20,8 @@ const CartPage = () => {
   const [value, setValue] = useState(1);
   const [quantity, setQuantity] = useState(1);
 
-  // keep track of the selected shipping method
   const [selectedMethod, setSelectedMethod] = useState(null);
 
-  //get selected value of shipping rate
   const [selectedRate, setSelectedRate] = useState(null);
 
   function handleMethodChange(event) {
@@ -119,32 +117,31 @@ const CartPage = () => {
     instance,
     user
   ) {
-    // If there are no shipping methods, the button should be disabled
+    // If there are no shipping methods the button disabled
     if (!shippingMethods || shippingMethods.length === 0) {
       return true;
     }
 
-    // If a shipping method has not been selected, the button should be disabled
+    // If a shipping method has not been selected disabled
     if (!selectedMethod) {
       return true;
     }
 
-    // If the payment is already being processed, the button should be disabled
+    // If the payment is already being processed disabled
     if (loading) {
       return true;
     }
 
-    // If the DropIn instance is not available, the button should be disabled
+    // If the DropIn instance is not available disabled
     if (!instance) {
       return true;
     }
 
-    // If the user's address is not available, the button should be disabled
+    // If the user's address is not available disabled
     if (!user?.address) {
       return true;
     }
 
-    // Otherwise, the button should be enabled
     return false;
   }
 
@@ -190,7 +187,7 @@ const CartPage = () => {
                       <p>Price : ${p.price * p.quantity}</p>
                     )}
                   </div>
-                  <div className="col-md-2">x {p.quantity}</div>
+                  <div className="col-md-2">x {p.quantity} metres</div>
                   <div className="col-md-2 cart-remove-btn">
                     <button
                       className="btn btn-danger"
