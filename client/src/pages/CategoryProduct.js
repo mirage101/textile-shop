@@ -83,10 +83,6 @@ const CategoryProduct = () => {
     }
   };
 
-  // function addToWishlist(product) {
-  //   setWishlistItems([...wishlistItems, product]);
-  // }
-
   return (
     <Layout>
       <div className="container mt-3 category">

@@ -16,6 +16,14 @@ const Login = () => {
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (email.trim() === "") {
+      toast.error("Email is required");
+      return;
+    }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
     try {
       const res = await axios.post("/api/v1/auth/login", {
         email,

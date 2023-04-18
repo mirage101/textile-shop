@@ -46,7 +46,6 @@ function App() {
         <Route path="/categories" element={<Categories />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/sale" element={<Sale />} />
-
         <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/search" element={<Search />} />
         <Route path="/information/:pageName" element={<InformationPage />} />

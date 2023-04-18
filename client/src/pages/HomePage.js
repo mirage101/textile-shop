@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
-import { useAuth } from "../context/auth";
+// import { useAuth } from "../context/auth";
 
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
@@ -12,7 +12,7 @@ import { AiOutlineReload } from "react-icons/ai";
 import "../styles/Homepage.css";
 import ProductsOnSale from "../components/ProductsOnSale";
 const HomePage = () => {
-  const [auth, setAuth] = useAuth();
+  // const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);

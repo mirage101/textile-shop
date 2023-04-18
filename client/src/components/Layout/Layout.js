@@ -7,28 +7,12 @@ import { useAuth } from "../../context/auth";
 import axios from "axios";
 import "../../styles/LayoutStyles.css";
 
-const Banner = ({ banner, position }) => {
-  const [imageSrc, setImageSrc] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("/api/v1/banners/");
-      // const data = response.data;
-      // const base64Data = data.background.data.$binary.base64;
-      // const binaryData = atob(base64Data);
-      // const blob = new Blob([binaryData], {
-      //   type: data.background.contentType,
-      // });
-      // const url = URL.createObjectURL(blob);
-      // setImageSrc(url);
-    };
-    fetchData();
-  }, []);
+const Banner = ({ banner }) => {
   return (
     <div
       className="banner"
       style={{
-        backgroundImage: `url('/api/v1/banners//background/${banner._id}')`,
+        backgroundImage: `url('/api/v1/banners/background/${banner._id}')`,
       }}
     >
       <h2>{banner.content}</h2>

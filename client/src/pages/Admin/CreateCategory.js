@@ -13,13 +13,12 @@ const CreateCategory = () => {
   const [updatedName, setUpdatedName] = useState("");
   const [description, setDescription] = useState("");
   const [updatedDescription, setUpdatedDescription] = useState("");
-  
+
   //handle Form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      
       const { data } = await axios.post("/api/v1/category/create-category", {
         name,
         description,
@@ -89,7 +88,7 @@ const CreateCategory = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Somtihing went wrong");
+      toast.error("Something went wrong");
     }
   };
   return (
@@ -102,7 +101,7 @@ const CreateCategory = () => {
           <div className="col-md-9">
             <h1>Manage Category</h1>
             <div className="p-3 w-50">
-            <h2>Create Category</h2>
+              <h2>Create Category</h2>
               <CategoryForm
                 handleSubmit={handleSubmit}
                 value={name}
@@ -112,7 +111,7 @@ const CreateCategory = () => {
               />
             </div>
             <div className="w-75">
-            <h2>Categories:</h2>
+              <h2>Categories:</h2>
               <table className="table">
                 <thead>
                   <tr>
