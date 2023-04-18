@@ -18,8 +18,31 @@ const Users = () => {
     }
   };
 
-  const editUserHandler = async (id) => {
-    console.log("edit user id");
+  const editUserRoleHandler = async (id) => {
+    try {
+      if (!window.confirm("Are you sure you want to change the user's role?")) {
+        return;
+      }
+
+      // Determine the new role
+      const user = users.find((user) => user._id === id);
+      const newRole = user.role === 1 ? 0 : 1;
+
+      const { data } = await axios.put(`/api/v1/auth/users/${id}`, {
+        role: newRole,
+      });
+
+      const updatedUser = { ...user, role: newRole };
+      const updatedUsers = users.map((user) =>
+        user._id === id ? updatedUser : user
+      );
+      setUsers(updatedUsers);
+
+      toast.success("User role changed successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
   };
 
   const deleteUserHandler = async (id) => {
@@ -62,10 +85,14 @@ const Users = () => {
                     <td>{u.address}</td>
                     <td>{u.role === 1 ? "Admin" : "User"}</td>
                     <td>
-                      <button onClick={editUserHandler(u._id)}>Edit</button>
+                      <button onClick={() => editUserRoleHandler(u._id)}>
+                        change role
+                      </button>
                     </td>
                     <td>
-                      <button onClick={deleteUserHandler(u._id)}>Delete</button>
+                      <button onClick={() => deleteUserHandler(u._id)}>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}

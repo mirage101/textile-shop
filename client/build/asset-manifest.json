@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.5eff1b4d.css",
-    "main.js": "/static/js/main.e6b84045.js",
+    "main.js": "/static/js/main.8d878bad.js",
     "static/media/fabric-types_gray.png": "/static/media/fabric-types_gray.97e6472142bf81ea9ee7.png",
     "index.html": "/index.html",
     "main.5eff1b4d.css.map": "/static/css/main.5eff1b4d.css.map",
-    "main.e6b84045.js.map": "/static/js/main.e6b84045.js.map"
+    "main.8d878bad.js.map": "/static/js/main.8d878bad.js.map"
   },
   "entrypoints": [
     "static/css/main.5eff1b4d.css",
-    "static/js/main.e6b84045.js"
+    "static/js/main.8d878bad.js"
   ]
 }

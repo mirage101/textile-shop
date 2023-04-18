@@ -33,6 +33,7 @@ const UpdateProduct = () => {
       setName(data.product.name);
       setId(data.product._id);
       setDescription(data.product.description);
+      setPhoto(data.product.photo);
       setPrice(data.product.price);
       setQuantity(data.product.quantity);
       setShipping(data.product.shipping);
@@ -132,6 +133,7 @@ const UpdateProduct = () => {
                   setCategory(value);
                 }}
                 value={category}
+                required
               >
                 {categories?.map((c) => (
                   <Option key={c._id} value={c._id}>
@@ -179,6 +181,7 @@ const UpdateProduct = () => {
                   placeholder="write a name"
                   className="form-control"
                   onChange={(e) => setName(e.target.value)}
+                  pattern="[a-zA-Z0-9]+"
                 />
               </div>
               <div className="mb-3">
@@ -188,6 +191,7 @@ const UpdateProduct = () => {
                   placeholder="write a description"
                   className="form-control"
                   onChange={(e) => setDescription(e.target.value)}
+                  pattern="[a-zA-Z0-9]+"
                 />
               </div>
 
@@ -198,6 +202,7 @@ const UpdateProduct = () => {
                   placeholder="write a Price"
                   className="form-control"
                   onChange={(e) => setPrice(e.target.value)}
+                  pattern="/^\d+\.\d{2}$/"
                 />
               </div>
               <div className="mb-3">
@@ -208,22 +213,6 @@ const UpdateProduct = () => {
                   className="form-control"
                   onChange={(e) => setQuantity(e.target.value)}
                 />
-              </div>
-              <div className="mb-3">
-                <Select
-                  bordered={false}
-                  placeholder="Select Shipping "
-                  size="large"
-                  showSearch
-                  className="form-select mb-3"
-                  onChange={(value) => {
-                    setShipping(value);
-                  }}
-                  value={shipping ? "yes" : "No"}
-                >
-                  <Option value="0">No</Option>
-                  <Option value="1">Yes</Option>
-                </Select>
               </div>
               <div className="mb-3 text-left">
                 <h5>Is on sale:</h5>
@@ -244,6 +233,7 @@ const UpdateProduct = () => {
                   placeholder="price on Sale"
                   className="form-control"
                   onChange={(e) => setsalePrice(e.target.value)}
+                  pattern="/^\d+\.\d{2}$/"
                 />
               </div>
               <div className="mb-3">
