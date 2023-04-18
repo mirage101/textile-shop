@@ -13,8 +13,6 @@ import shippingRoutes from "./routes/shippingRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import tickerRoutes from "./routes/tickerRoutes.js";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
 
 //config env
 dotenv.config();
@@ -22,9 +20,6 @@ dotenv.config();
 //database config
 connectDB();
 
-//esmodule fix
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 //rest object
 const app = express();
 
@@ -32,11 +27,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "./client/build")));
-// app.get('*', function (req, res) {
-//   const index = path.join(__dirname, 'build', 'index.html');
-//   res.sendFile(index);
-// });
+
 //routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
@@ -47,10 +38,11 @@ app.use("/api/v1/slider", slideRoutes);
 app.use("/api/v1/shipping", shippingRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/modules", tickerRoutes);
-
 //rest api
-app.use("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+app.get("/", (req, res) => {
+  res.send({
+    message: "Welcome to textile shop",
+  });
 });
 
 //PORT

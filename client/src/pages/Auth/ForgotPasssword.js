@@ -28,7 +28,7 @@ const ForgotPasssword = () => {
     }
     if (!newPassword) {
       errors.newPassword = "Password is required";
-    } else if (newPassword.length < 8) {
+    } else if (newPassword.length < 6) {
       errors.newPassword = "Password must be at least 8 characters long";
     }
     if (Object.keys(errors).length === 0) {

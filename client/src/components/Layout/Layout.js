@@ -4,7 +4,6 @@ import Header from "./Header";
 import { Helmet } from "react-helmet";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "../../context/auth";
-import axios from "axios";
 import "../../styles/LayoutStyles.css";
 
 const Banner = ({ banner }) => {
@@ -85,8 +84,8 @@ const Layout = ({ children, title, description, keywords, author }) => {
 
 Layout.defaultProps = {
   title: "Textile shop",
-  description: "",
-  keywords: "",
+  description: "Textile shop description",
+  keywords: "textile",
   author: "Ivan Filipov",
 };
 

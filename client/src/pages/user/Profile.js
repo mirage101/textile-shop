@@ -90,7 +90,6 @@ const Profile = () => {
                     className="form-control"
                     id="exampleInputPassword1"
                     placeholder="Enter Your Password"
-                    pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/"
                   />
                 </div>
                 <div className="mb-3">
@@ -100,8 +99,6 @@ const Profile = () => {
                     onChange={(e) => setPhone(e.target.value)}
                     className="form-control"
                     id="exampleInputEmail1"
-                    placeholder="Enter Your Phone"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   />
                 </div>
                 <div className="mb-3">
@@ -112,7 +109,6 @@ const Profile = () => {
                     className="form-control"
                     id="exampleInputEmail1"
                     placeholder="Enter Your Address"
-                    pattern="/^\d+\s[A-z]+\s[A-z]+/"
                   />
                 </div>
 

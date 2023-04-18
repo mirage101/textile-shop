@@ -99,7 +99,6 @@ const Register = () => {
               className="form-control"
               id="exampleInputPassword1"
               placeholder="Enter Your Password"
-              pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/"
               required
             />
           </div>
@@ -111,7 +110,6 @@ const Register = () => {
               className="form-control"
               id="exampleInputEmail1"
               placeholder="Enter Your Phone"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
               required
             />
           </div>
@@ -123,7 +121,6 @@ const Register = () => {
               className="form-control"
               id="exampleInputEmail1"
               placeholder="Enter Your Address"
-              pattern="/^\d+\s[A-z]+\s[A-z]+/"
               required
             />
           </div>
@@ -135,7 +132,6 @@ const Register = () => {
               className="form-control"
               id="exampleInputEmail1"
               placeholder="What is Your Favorite sports"
-              pattern="/^\d+\s[A-z]+\s[A-z]+/"
               required
             />
           </div>

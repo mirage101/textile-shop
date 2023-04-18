@@ -51,7 +51,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     getWishlist(userId);
-  }, []);
+  }, [wishlistItems]);
 
   return (
     <Layout title={"Dashboard - Ecommerce App"}>

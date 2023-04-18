@@ -37,7 +37,6 @@ const Orders = () => {
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Buyer</th>
                         <th scope="col"> date</th>
                         <th scope="col">Shippment method</th>
@@ -48,7 +47,6 @@ const Orders = () => {
                     <tbody>
                       <tr>
                         <td>{i + 1}</td>
-                        <td>{o?.status}</td>
                         <td>{o?.buyer?.name}</td>
                         <td>{moment(o?.createAt).fromNow()}</td>
                         <td>{o?.shippment?.selectedMethod}</td>
@@ -69,7 +67,7 @@ const Orders = () => {
                               className="card-img-top"
                               alt={p.name}
                               width="100px"
-                              height={"100px"}
+                              height={"220px"}
                             />
                           </div>
                           <div className="col-md-8">

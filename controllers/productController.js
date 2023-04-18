@@ -8,6 +8,7 @@ import braintree from "braintree";
 import dotenv from "dotenv";
 import { nextTick } from "process";
 import { Types } from "mongoose";
+import { ObjectId } from "mongodb";
 
 dotenv.config();
 
@@ -215,7 +216,7 @@ export const deleteProductController = async (req, res) => {
 };
 
 //upate producta
-const { ObjectId } = Types;
+
 export const updateProductController = async (req, res) => {
   try {
     const {
@@ -251,8 +252,8 @@ export const updateProductController = async (req, res) => {
           .send({ error: "photo is Required and should be less then 1mb" });
     }
 
-    const product = await Product.findByIdAndUpdate(
-      ObjectId(req.params.pid),
+    const product = await productModel.findByIdAndUpdate(
+      new ObjectId(req.params.pid),
       { ...req.fields, slug: slugify(name) },
       { new: true }
     );
@@ -309,6 +310,7 @@ export const productFiltersController = async (req, res) => {
 export const productCountController = async (req, res) => {
   try {
     const total = await productModel.find({}).estimatedDocumentCount();
+
     res.status(200).send({
       success: true,
       total,
@@ -326,7 +328,7 @@ export const productCountController = async (req, res) => {
 // product list base on page
 export const productListController = async (req, res) => {
   try {
-    const perPage = 6;
+    const perPage = 10;
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
       .find({})
@@ -381,7 +383,7 @@ export const realtedProductController = async (req, res) => {
         _id: { $ne: pid },
       })
       .select("-photo")
-      .limit(3)
+      .limit(6)
       .populate("category");
     res.status(200).send({
       success: true,

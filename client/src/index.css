@@ -186,7 +186,9 @@
 .wishlist-btns button {
   margin-bottom: 20px;
   color: #fff;
-  text-transform: capitalize;
+  background: blue;
+  padding: 5px;
+  text-transform: uppercase;
 }
 .wishlist-details img {
   width: 21%;

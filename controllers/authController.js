@@ -153,6 +153,39 @@ export const forgotPasswordController = async (req, res) => {
   }
 };
 
+//change user role
+export const changeRoleController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    const user = await userModel.findByIdAndUpdate(
+      id,
+      { $set: { role: role === 0 ? 1 : 0 } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "User role updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error,
+    });
+  }
+};
 //test controller
 export const testController = (req, res) => {
   try {

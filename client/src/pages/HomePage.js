@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
-
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
 import axios from "axios";

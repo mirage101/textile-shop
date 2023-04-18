@@ -17,11 +17,9 @@ export const createBannerController = async (req, res) => {
       case !name:
         return res.status(500).send({ error: "Name is Required" });
       case background && background.size > 1000000:
-        return res
-          .status(500)
-          .send({
-            error: "background is Required and should be less then 1mb",
-          });
+        return res.status(500).send({
+          error: "background is Required and should be less then 1mb",
+        });
     }
 
     const banner = new bannerModel({ ...req.fields, slug: slugify(name) });
@@ -110,25 +108,6 @@ export const updateBannerController = async (req, res) => {
     });
   }
 };
-//   // get bg
-// export const bannerBgController = async (req, res) => {
-//     try {
-//       const banner = await bannerModel.findById(req.params.pid).select("bgImage");
-//       if (banner.bgImage.data) {
-//         res.set("Content-type", banner.bgImage.contentType);
-//         return res.status(200).send(banner.bgImage.data);
-//       }
-//     } catch (error) {
-//       console.log(error);
-//       res.status(500).send({
-//         success: false,
-//         message: "Erorr while getting bgImage",
-//         error,
-//       });
-//     }
-//   };
-
-//delete controller
 export const deleteBannerController = async (req, res) => {
   try {
     const { id } = req.params;

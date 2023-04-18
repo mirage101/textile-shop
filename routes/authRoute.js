@@ -13,6 +13,7 @@ import {
   addToWishlist,
   removeFromWishlist,
   getUserWishlist,
+  changeRoleController,
 } from "../controllers/authController.js";
 
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
@@ -41,6 +42,8 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
+//Register || Method POST
+router.put("/users/:id", requireSignIn, isAdmin, changeRoleController);
 //update profile
 router.put("/profile", requireSignIn, updateProfileController);
 
