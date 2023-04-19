@@ -320,6 +320,20 @@
 .qtyBox-pr-details {
   margin: 20px 0;
 }
+.list-users button {
+  background-color: blue;
+  color: white;
+  padding: 5px;
+  outline: none;
+  border: none;
+}
+
+.list-users .delete-btn {
+  background-color: #ff0000;
+}
+.form-edit-user {
+  max-width: 90%;
+}
 /* .banner h2,
 .banner p {
   position: absolute;

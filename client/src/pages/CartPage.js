@@ -240,7 +240,7 @@ const CartPage = () => {
                   )}
                 </div>
               )}
-              <div class="mt-2">
+              <div className="mt-2">
                 {clientToken && auth?.token && cart?.length && (
                   <form className="shipping-form">
                     {shippingMethods?.map((m) => (

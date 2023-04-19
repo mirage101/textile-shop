@@ -18,6 +18,8 @@ const CreateProduct = () => {
   const [banners, setBanners] = useState([]);
   const [status, setStatus] = useState("Active");
   const [position, setPosition] = useState("Top");
+  const [updatedName, setUpdatedName] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
 
   //get all cat
   const getAllBanners = async () => {

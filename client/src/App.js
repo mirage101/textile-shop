@@ -36,6 +36,7 @@ import Payments from "./pages/Payments";
 import Returns from "./pages/Returns";
 import InfoPages from "./pages/Admin/InfoPages";
 import InformationPage from "./pages/InformationPage";
+import EditUser from "./pages/Admin/EditUser";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="admin/product/:slug" element={<UpdateProduct />} />
           <Route path="admin/banner" element={<CreateBanner />} />
           <Route path="admin/banner/:slug" element={<UpdateBanner />} />
+          <Route path="admin/edit/user/:id" element={<EditUser />} />
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/users" element={<Users />} />
           <Route path="admin/orders" element={<AdminOrders />} />

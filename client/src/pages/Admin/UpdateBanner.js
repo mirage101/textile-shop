@@ -10,15 +10,16 @@ const { Option } = Select;
 const UpdateBanner = () => {
   const navigate = useNavigate();
   const params = useParams();
-  
+
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [background, setBackground] = useState("");
   const [isActive, setIsActive] = useState("");
   const [order, setOrder] = useState("");
   const [status, setStatus] = useState("Active");
-  const [position, setPosition] = useState("Top")
-   const [id, setId] = useState("");
+  const [position, setPosition] = useState("Top");
+  const [id, setId] = useState("");
+  const [banners, setBanners] = useState([]);
 
   //get single banner
   const getSingleBanner = async () => {
@@ -37,6 +38,17 @@ const UpdateBanner = () => {
       console.log(error);
     }
   };
+  const getAllBanners = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/banners");
+      if (data?.success) {
+        setBanners(data?.banners);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something wwent wrong in getting catgeory");
+    }
+  };
   useEffect(() => {
     getSingleBanner();
     //eslint-disable-next-line
@@ -47,30 +59,33 @@ const UpdateBanner = () => {
     e.preventDefault();
     try {
       const bannerData = new FormData();
-      bannerData.append("name", name);
-      bannerData.append("content", content);
-      bannerData.append("isActive", isActive);
-      bannerData.append("order", order);
-      background && bannerData.append("background", background);
-      bannerData.append("position", position);
-      alert(bannerData)
-      const { data } = axios.put(
+      bannerData.set("name", name);
+      bannerData.set("content", content);
+      bannerData.set("isActive", isActive);
+      bannerData.set("order", order);
+      bannerData.set("background", background);
+      bannerData.set("position", position);
+
+      console.log(bannerData);
+      const { data } = await axios.put(
         `/api/v1/banners/update-banner/${id}`,
         bannerData
       );
-      if (data?.success) {
-        toast.error(data?.message);
-      } else {
+
+      if (data.success) {
         toast.success("Banner Updated Successfully");
         navigate("/dashboard/admin/banner");
+      } else {
+        toast.error(data.message);
+        console.log(data);
       }
     } catch (error) {
       console.log(error);
       toast.error("something went wrong");
     }
+    getAllBanners();
   };
 
-  
   return (
     <Layout title={"Dashboard - Update Banner"}>
       <div className="container-fluid m-3 p-3">
@@ -81,7 +96,7 @@ const UpdateBanner = () => {
           <div className="col-md-9">
             <h1>Update Banner</h1>
             <div className="m-1 w-75">
-            <div className="mb-3">
+              <div className="mb-3">
                 <h5>Banner name</h5>
                 <input
                   type="text"
@@ -134,14 +149,14 @@ const UpdateBanner = () => {
                   </div>
                 )}
               </div>
-    
+
               <div className="mb-3">
                 <h5>Status</h5>
                 <Select
                   bordered={false}
                   placeholder="Select Status "
                   size="large"
-                   showSearch
+                  showSearch
                   className="form-select mb-3"
                   onChange={(value) => {
                     setIsActive(value);
