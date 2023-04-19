@@ -251,10 +251,12 @@ export const updateProductController = async (req, res) => {
           .status(500)
           .send({ error: "photo is Required and should be less then 1mb" });
     }
+    // Convert salePrice to number if it is not null
+    const parsedSalePrice = salePrice !== null ? 0 : null;
 
     const product = await productModel.findByIdAndUpdate(
       new ObjectId(req.params.pid),
-      { ...req.fields, slug: slugify(name) },
+      { ...req.fields, slug: slugify(name), salePrice: parsedSalePrice },
       { new: true }
     );
 

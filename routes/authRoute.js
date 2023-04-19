@@ -14,6 +14,8 @@ import {
   removeFromWishlist,
   getUserWishlist,
   changeRoleController,
+  editUserController,
+  getUserController,
 } from "../controllers/authController.js";
 
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
@@ -42,8 +44,17 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
+//get user by Id
+router
+  .get("/users/:id", requireSignIn, isAdmin, getUserController)
+  // .put("/users/:id", requireSignIn, isAdmin, changeRoleController);
+  .put("/users/:id", requireSignIn, isAdmin, changeRoleController, editUserController);
+  
+//edit user
+// router.put("/user/edit/:id", requireSignIn, isAdmin, editUserController);
+
 //Register || Method POST
-router.put("/users/:id", requireSignIn, isAdmin, changeRoleController);
+
 //update profile
 router.put("/profile", requireSignIn, updateProfileController);
 

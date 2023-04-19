@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import orderModel from "../models/orderModel.js";
 import { hashPassword, comparePassword } from "./../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
+import productModel from "../models/productModel.js";
 
 export const registerController = async (req, res) => {
   try {
@@ -154,28 +155,30 @@ export const forgotPasswordController = async (req, res) => {
 };
 
 //change user role
+
 export const changeRoleController = async (req, res) => {
   try {
     const { id } = req.params;
     const { role } = req.body;
-
-    const user = await userModel.findByIdAndUpdate(
-      id,
-      { $set: { role: role === 0 ? 1 : 0 } },
+    console.log(id, role);
+    
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id: id },
+      { $set: { role: role === 0 ? 0 : 1 } },
       { new: true }
     );
 
-    if (!user) {
+    if (!updatedUser) {
       return res.status(404).send({
         success: false,
         message: "User not found",
       });
     }
-
+    console.log(updatedUser);
     res.status(200).send({
       success: true,
       message: "User role updated successfully",
-      user,
+      user: updatedUser,
     });
   } catch (error) {
     console.log(error);
@@ -184,6 +187,48 @@ export const changeRoleController = async (req, res) => {
       message: "Something went wrong",
       error,
     });
+  }
+};
+
+
+export const getUserController = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const editUserController = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password, phone, address, answer } = req.body;
+
+  try {
+    const user = await userModel.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.name = name;
+    user.email = email;
+    user.password = password;
+    user.phone = phone;
+    user.address = address;
+    user.answer = answer;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 //test controller
