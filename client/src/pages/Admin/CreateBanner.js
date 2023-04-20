@@ -8,7 +8,7 @@ import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
-const CreateProduct = () => {
+const CreateBanner = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
@@ -222,7 +222,7 @@ const CreateProduct = () => {
                       <td>
                         <Link
                           key={b._id}
-                          to={`/dashboard/admin/banner/${b.slug}`}
+                          to={`/dashboard/admin/banner/${b._id}`}
                           className="product-link"
                         >
                           Edit
@@ -249,4 +249,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default CreateBanner;

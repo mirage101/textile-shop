@@ -45,14 +45,15 @@ export const createBannerController = async (req, res) => {
 
 // get single banner
 export const getSingleBannerController = async (req, res) => {
+  const {id} = req.params;
   try {
     const banner = await bannerModel
-      .findOne({ slug: req.params.slug })
-      .select("-background");
+      .findById(id)
+      
     // .populate("category");
     res.status(200).send({
       success: true,
-      message: "Broduct Fetched",
+      message: "Banner Fetched",
       banner,
     });
   } catch (error) {
@@ -86,9 +87,12 @@ export const getBannerController = async (req, res) => {
 //upate producta
 export const updateBannerController = async (req, res) => {
   try {
-    const { name, content, isActive, order, position } = req.body;
-    const { bgImage } = req.body;
+    const { name, content, isActive, order, position, bgImage } = req.fields;
+    
     const { id } = req.params;
+
+    console.log(id, name, content, isActive, order, position, bgImage)
+
     const banner = await bannerModel.findByIdAndUpdate(
       id,
       { name, content, isActive, order, bgImage, position },

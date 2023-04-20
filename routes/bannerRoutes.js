@@ -39,6 +39,6 @@ router.get("/background/:id", bannerBgController);
 router.delete("/:id", deleteBannerController);
 
 //single banner
-router.get("/get-banner/:slug", getSingleBannerController);
+router.get("/get-banner/:id", getSingleBannerController);
 
 export default router;
